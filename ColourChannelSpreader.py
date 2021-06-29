@@ -1,6 +1,6 @@
 from PIL import Image
 
-im = Image.open("C:/Users/lollb/Pictures/red.png")
+im = Image.open("C:/Users/lollb/Pictures/cc89170fde7eaede.jpeg")
 width, height = im.size
 red_image = Image.new('RGB', (width, height))
 green_image = Image.new('RGB', (width, height))
@@ -8,7 +8,6 @@ blue_image = Image.new('RGB', (width, height))
 red_data = red_image.load()
 green_data = green_image.load()
 blue_data = blue_image.load()
-
 
 for i in range(width):
     for j in range(height):
