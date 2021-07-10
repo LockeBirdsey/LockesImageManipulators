@@ -5,7 +5,7 @@ import numpy as np
 # nicked from https://github.com/iechevarria/gameboy-camera-filter
 def main():
     """Main function"""
-    filename = "C:/Users/lollb/Pictures/Esfjap0XUAAdIP0.jfif"
+    filename = "C:/Users/lollb/repos/ImageManipulators/result.png"
     img = Image.open(filename).convert('L')
     img = np.asarray(img)
     img.flags.writeable = True
