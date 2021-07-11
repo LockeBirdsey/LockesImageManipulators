@@ -1,19 +1,34 @@
 from PIL import Image
 import numpy as np
 
-
 # nicked from https://github.com/iechevarria/gameboy-camera-filter
-def main():
-    """Main function"""
-    filename = "C:/Users/lollb/repos/ImageManipulators/result.png"
+from Pixelator import pixelator_down, pixelator_up
+
+
+def gbc_full(path):
+    img = Image.open(path).convert('L')
+    size = img.size
+    s1 = pixelator_down(img, 128, Image.BILINEAR)
+    s2 = gbc(s1)
+    s3 = pixelator_up(s2, size)
+    s3.save("result_pixel_gbc_filter.png")
+    return s3
+
+
+def gbc_main(filename):
     img = Image.open(filename).convert('L')
+    img = gbc(img)
+    filename = filename.split(".")[0] + "_gbc_filter.png"
+    img.save(filename)
+    print("Saved to " + filename)
+
+
+def gbc(img):
     img = np.asarray(img)
     img.flags.writeable = True
     img = gbc_filter(img)
     img = Image.fromarray(img, 'L')
-    filename = filename.split(".")[0] + "_gbc_filter.png"
-    img.save(filename)
-    print("Saved to " + filename)
+    return img
 
 
 def gbc_filter(img):
@@ -50,4 +65,5 @@ def gbc_filter(img):
 
 
 if __name__ == '__main__':
-    main()
+    gbc_full("C:/Users/lollb/Pictures/75349224_460503281489895_6964218294265970688_n.jpg")
+    # gbc_main("C:/Users/lollb/Pictures/Esfjap0XUAAdIP0.jfif")
