@@ -1,7 +1,7 @@
 from PIL import Image
 from Utils import rgb_to_hex, decimal_colour_to_rgb
 
-im = Image.open("C:/Users/lollb/Pictures/cc89170fde7eaede.jpeg")
+im = Image.open("C:/Users/lollb/Pictures/Esfjap0XUAAdIP0.jfif")
 width, height = im.size
 mean = 0
 colour_counts = dict()
@@ -24,6 +24,18 @@ for i in range(width):
         colour_counts[as_dec] = colour_counts[as_dec] + 1
         mean += as_dec
 
+# build colour squares
+colour_squares = Image.new('RGB', (300, 400))
+new_data = colour_squares.load()
+
+
+def write_colour_square(img, x, y, color):
+    for i in range(x, x + 100):
+        for j in range(y, y + 100):
+            img[(i, j)] = color
+
+
+# mean
 mean = mean / (width * height)
 mean_as_rgb = decimal_colour_to_rgb(mean)
 print("mean colour is: " + str(mean_as_rgb) + " or " + str(hex(int(mean))))
@@ -51,11 +63,24 @@ mode = list(colour_counts_sorted_by_freq.keys())[entries - 1]
 mode_as_rgb = decimal_colour_to_rgb(mode)
 print("mode colour is: " + str(mode_as_rgb) + " or " + str(hex(int(mode))))
 
-# top 10 colours
+# top 2-10 (1-9 from 0) colours
 print("top 10 colours:")
 start = entries - 1
-for i in range(10):
+x_off = 0
+y_off = 100
+for i in range(1, 10):
     colour = list(colour_counts_sorted_by_freq.keys())[start - i]
     colour_as_rgb = decimal_colour_to_rgb(colour)
+    write_colour_square(new_data, x_off, y_off, colour_as_rgb)
+    if x_off < 200:
+        x_off += 100
+    elif x_off == 200:
+        x_off = 0
+        y_off += 100
     print("top " + str(i) + " is: " + str(colour_as_rgb) + " or " + str(hex(int(colour))) + " with " + str(
         colour_counts[colour]) + " occurrences")
+
+write_colour_square(new_data, 0, 0, mean_as_rgb)
+write_colour_square(new_data, 100, 0, median_as_rgb)
+write_colour_square(new_data, 200, 0, mode_as_rgb)
+colour_squares.save("colour_squares.png", "png")
