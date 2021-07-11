@@ -1,6 +1,6 @@
 from PIL import Image
 
-im = Image.open("C:/Users/lollb/Pictures/cc89170fde7eaede.jpeg")
+im = Image.open("/Users/locke/Pictures/vlcsnap-2019-11-17-22h51m23s980.png")
 width, height = im.size
 new_image = Image.new('RGB', (width, height))
 data = new_image.load()
